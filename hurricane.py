@@ -5,6 +5,7 @@ import data
 #Includes:
     #Converting strings to numbers (floats)
     #Writing & Reading Nested Dictionaries
+    #Generating new dictionaries based on a specific value in another dictionary
     
 #updates a list of number strings to a list of floats
 def new_damages(list):
@@ -69,4 +70,34 @@ years_dictionary = year_dict(hurricane_dictionary)
 #testing
 #print(years_dictionary[1932])
 
+#generates a new dictionary with counts of affected areas
+def area_dict(dict):
+    new_dict = {}
+    for value in dict.values():
+        for area in value['Areas Affected']:
+            try:
+                new_dict[area] += 1
+            except KeyError:
+                new_dict[area] = 1
+    return new_dict
+
+#implementing
+areas_dictionary = area_dict(hurricane_dictionary)
+
+#testing
+#print(areas_dictionary)
+
+#find and return the max value in a dict
+def most_affected(dict):
+    largest = None
+    place = None
+    for key, value in dict.items():
+        if not largest or value > largest:
+            largest = value
+            place = key
+    print("The place most affected by hurricanes was {0}, which was hit {1} times.".format(place, largest))
+    
+#implementing & testing
+most_affected(areas_dictionary)
+    
 
