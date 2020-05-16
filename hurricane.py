@@ -6,6 +6,7 @@ import data
     #Converting strings to numbers (floats)
     #Writing & Reading Nested Dictionaries
     #Generating new dictionaries based on a specific value in another dictionary
+    #Finding the max value (of a value) in a dictionary
     
 #updates a list of number strings to a list of floats
 def new_damages(list):
@@ -100,4 +101,67 @@ def most_affected(dict):
 #implementing & testing
 most_affected(areas_dictionary)
     
+#find and return the max value in a dictionary
+def most_deaths(dict):
+    largest = None
+    name = None
+    for key, value in dict.items():
+        if not largest or value['Death'] > largest:
+            largest = value['Death']
+            name = key
+    print("The hurricane that caused the greatest number of deaths was {0} ({1}).".format(name, largest))
 
+#implementing & testing
+most_deaths(hurricane_dictionary)
+
+#judge the hurricanes according to a scale, and add them to a new dictionary based on that scale
+def scale(dict):
+    #initialize the new dict
+    new_dict = {0:[], 1:[], 2:[], 3:[], 4:[], 5:[]}
+    mort = {0:0, 1:100, 2:500, 3:1000, 4:10000}
+    for value in dict.values():
+        if value['Death'] > 10000:
+            new_dict[5].append(value)
+        elif value['Death'] >= 1000:
+            new_dict[4].append(value)
+        elif value['Death'] >= 500:
+            new_dict[3].append(value)
+        elif value['Death'] >= 100:
+            new_dict[2].append(value)
+        elif value['Death'] > 0:
+            new_dict[1].append(value)
+        else:
+            new_dict[0].append(value)
+    return new_dict
+    
+#implementing
+mortality_scale = scale(hurricane_dictionary)
+
+#testing
+#print(mortality_scale)
+
+#find the hurricane with the highest damage
+def most_damage(dict):
+    largest = None
+    largest_string = None
+    name = None
+    for key, value in dict.items():
+        if value['Damage'] != "Damages not recorded":
+            temp = None
+            if 'M' in value['Damage']:
+                temp = value['Damage']
+                temp = float(temp[:-1]) * 1000000
+            else:
+                temp = value['Damage']
+                temp = float(temp[:-1]) * 1000000000
+            if not largest or temp > largest:
+                largest_string = value['Damage']
+                largest = temp
+                name = key
+    print("The hurricane that caused the greatest damage was {0}, with ${1} of damage.".format(name, largest_string))
+    
+#implementing and testing
+most_damage(hurricane_dictionary)
+
+    
+            
