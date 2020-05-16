@@ -1,7 +1,7 @@
 import data
 
 #Codecademy Hurricane Analysis Project
-#Started 5/16/2020
+#Started & Completed 5/16/2020
 #Includes:
     #Converting strings to numbers (floats)
     #Writing & Reading Nested Dictionaries
@@ -118,7 +118,7 @@ most_deaths(hurricane_dictionary)
 def scale(dict):
     #initialize the new dict
     new_dict = {0:[], 1:[], 2:[], 3:[], 4:[], 5:[]}
-    mort = {0:0, 1:100, 2:500, 3:1000, 4:10000}
+    #mort = {0:0, 1:100, 2:500, 3:1000, 4:10000}
     for value in dict.values():
         if value['Death'] > 10000:
             new_dict[5].append(value)
@@ -162,6 +162,38 @@ def most_damage(dict):
     
 #implementing and testing
 most_damage(hurricane_dictionary)
+
+#generates dictionary based on damage scale
+def scale2(dict):
+    new_dict = {0:[], 1:[], 2:[], 3:[], 4:[], 5:[]}
+    #scale 0; 100,000,000; 1,000,000,000; 10,000,000,000; 50,000,000,000
+    for value in dict.values():
+        if value['Damage'] == "Damages not recorded":
+            new_dict[0].append(value)
+        else:
+            if 'M' in value['Damage']:
+                temp = value['Damage']
+                temp = float(temp[:-1])
+                if temp < 100:
+                    new_dict[1].append(value)
+                else:
+                    new_dict[2].append(value)
+            else:
+                temp = value['Damage']
+                temp = float(temp[:-1])
+                if temp >= 50:
+                    new_dict[5].append(value)
+                elif temp >= 10:
+                    new_dict[4].append(value)
+                else:
+                    new_dict[3].append(value)
+    return new_dict
+
+#implementing
+damage_scale = scale2(hurricane_dictionary)
+
+#testing
+#print(damage_scale[2])
 
     
             
